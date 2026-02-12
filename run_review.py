@@ -47,17 +47,21 @@ async def run_review(pr_number: int):
     )
 
     try:
-        # Run the agent using run_async
-        context = await root_agent.run_async(user_prompt)
+        # Run the agent using run_async generator
+        context = None
+        async for event in root_agent.run_async(user_prompt):
+            context = event
 
         # The result in ADK 1.24+ is typically in context.final_result
         # We'll print a confirmation and log the final output.
         logger.info("✅ Security Review Processing Completed")
 
-        if hasattr(context, 'final_result'):
+        if context and hasattr(context, 'final_result'):
             print(context.final_result)
-        else:
+        elif context:
             print(str(context))
+        else:
+            logger.error("❌ No context returned from agent")
 
     except Exception as e:
         logger.error(f"❌ Error running security review: {str(e)}", exc_info=True)
