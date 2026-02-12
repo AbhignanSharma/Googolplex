@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Stored XSS</title>
+</head>
+
+<body>
+    <h1>Comments</h1>
+    <form action="/xss/comments" method="post">
+        <textarea name="text"></textarea>
+        <button type="submit">Add Comment</button>
+    </form>
+    <ul>
+        <li th:each="c : ${comments}" th:text="${c.text}">Comment</li>
+    </ul>
+</body>
+
+</html>

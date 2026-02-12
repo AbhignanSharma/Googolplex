@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>DOM XSS</title>
+</head>
+
+<body>
+    <h1>DOM XSS</h1>
+    <div id="greeting"></div>
+    <script>
+        const name = new URLSearchParams(window.location.search).get('name');
+        // SECURE: Using textContent to prevent script execution
+        document.getElementById('greeting').textContent = "Hello, " + name;
+    </script>
+</body>
+
+</html>

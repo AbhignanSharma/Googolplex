@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Reflected XSS</title>
+</head>
+
+<body>
+    <h1>Welcome, <span th:text="${name}">User</span>!</h1>
+    <p>This page reflects your name parameter without escaping.</p>
+</body>
+
+</html>
