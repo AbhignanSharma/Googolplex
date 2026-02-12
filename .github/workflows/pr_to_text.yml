@@ -39,3 +39,22 @@ jobs:
           name: pr-details-text
           path: pr_details.txt
           retention-days: 5
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install google-generativeai
+
+      - name: Run AI Review
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python scripts/ai_pr_reviewer.py
+
+      - name: Post Comment
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: gh pr comment $PR_NUMBER --body-file ai_response.txt
