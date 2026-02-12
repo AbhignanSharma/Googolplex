@@ -19,7 +19,7 @@ Environment variables required:
 import os
 import json
 import requests
-from typing import Optional
+from typing import Optional, List, Dict, Any
 from datetime import datetime
 
 
@@ -190,7 +190,7 @@ def post_review_comment(
     pr_number: int,
     body: str,
     event: str = "COMMENT",
-    comments: Optional[list] = None,
+    comments: Optional[List[Dict[str, Any]]] = None,
 ) -> dict:
     """Post a security review on a GitHub Pull Request.
 
@@ -313,7 +313,7 @@ def add_security_label(pr_number: int, severity: str) -> dict:
 
 def create_patch_pr(
     pr_number: int,
-    fixes: list,
+    fixes: List[Dict[str, Any]],
     title: Optional[str] = None,
     body: Optional[str] = None,
 ) -> dict:

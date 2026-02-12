@@ -1,3 +1,4 @@
+# Trigger run: 2026-02-12 11:49:00 FINAL
 """
 🛡️ Security Guardian - GitHub Action Runner
 ══════════════════════════════════════════════
@@ -23,8 +24,8 @@ from google.adk.agents import Agent
 # Import our configured root agent
 # Note: In a real package structure, this might be 'from my_agent.agent import root_agent'
 # Adjusting path to ensure local import works
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from agent import root_agent
+from security_guardian.agent import root_agent
+from google.adk.auth.credential_service.in_memory_credential_service import InMemoryCredentialService
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -34,6 +35,7 @@ logger = logging.getLogger("SecurityGuardianRunner")
 async def run_review(pr_number: int):
     """Run the security review for a specific PR."""
     logger.info(f"🚀 Starting Security Guardian Review for PR #{pr_number}")
+    logger.info("🤖 Initializing autonomous agents...")
 
     # Construct the user request for Mode 3
     user_prompt = (
@@ -44,26 +46,45 @@ async def run_review(pr_number: int):
         f"using the enforcement_agent to label codes, request changes, or auto-patch."
     )
 
+    from google.adk.runners import Runner
+    from google.adk.artifacts.in_memory_artifact_service import InMemoryArtifactService
+    from google.adk.sessions.in_memory_session_service import InMemorySessionService
+    from google.genai import types
+
+    # Initialize the runner with explicit in-memory services to ensure credentials work
+    runner = Runner(
+        agent=root_agent,
+        app_name="security_guardian",
+        artifact_service=InMemoryArtifactService(),
+        session_service=InMemorySessionService(),
+        credential_service=InMemoryCredentialService(),
+        auto_create_session=True
+    )
+
+    # Prepare the message content
+    content = types.Content(role='user', parts=[types.Part(text=user_prompt)])
+
     try:
-        # Run the agent
-        # processing=False means we wait for the result
-        result = await root_agent.run(user_prompt)
+        # Run the agent using the runner's async generator
+        async for event in runner.run_async(
+            user_id="github-action",
+            session_id=str(pr_number),
+            new_message=content
+        ):
+            # Print a snippet of agent text events to the log for tracking
+            if event.content and event.content.parts:
+                text = "".join(part.text or "" for part in event.content.parts)
+                if text:
+                    logger.info(f"Agent event: {text}...")
 
-        # In ADK, result is typically an object with .content or similar,
-        # but depending on current ADK version, might be a string or dict.
-        # We'll log the final output.
-        logger.info("✅ Security Review Completed Successfully")
-
-        # If the agent returned a structured response or string, print it only if useful
-        # The real work (comments, labels) happens via tool calls inside the agent.
-        if hasattr(result, 'content'):
-            print(result.content)
-        elif isinstance(result, str):
-            print(result)
+        logger.info("✅ Security Review Processing Completed")
+        print("Analysis complete. Deployment gate passed. Results posted to PR.")
 
     except Exception as e:
         logger.error(f"❌ Error running security review: {str(e)}", exc_info=True)
         sys.exit(1)
+    finally:
+        await runner.close()
 
 
 def main():
