@@ -26,7 +26,7 @@ Pipeline (8 agents):
 """
 
 from google.adk.agents import Agent, SequentialAgent
-from .prompts import (
+from prompts import (
     ORCHESTRATOR_INSTRUCTION,
     PATTERN_AGENT_INSTRUCTION,
     CONTEXT_AGENT_INSTRUCTION,
@@ -37,7 +37,7 @@ from .prompts import (
     VERIFICATION_AGENT_INSTRUCTION,
     ENFORCEMENT_AGENT_INSTRUCTION,
 )
-from .tools import (
+from tools import (
     read_file,
     list_files,
     get_git_diff,
@@ -45,7 +45,7 @@ from .tools import (
     get_dependency_file,
     get_recent_commits,
 )
-from .github_tools import (
+from github_tools import (
     get_pr_diff,
     get_pr_file_content,
     post_review_comment,
