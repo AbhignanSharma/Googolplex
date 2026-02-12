@@ -1,159 +1,465 @@
-# 🚀 Agent Starter Pack
+# Agile Reporting System
 
-![Version](https://img.shields.io/pypi/v/agent-starter-pack?color=blue) [![1-Minute Video Overview](https://img.shields.io/badge/1--Minute%20Overview-gray)](https://youtu.be/jHt-ZVD660g) [![Docs](https://img.shields.io/badge/Documentation-gray)](https://googlecloudplatform.github.io/agent-starter-pack/) <a href="https://studio.firebase.google.com/new?template=https%3A%2F%2Fgithub.com%2FGoogleCloudPlatform%2Fagent-starter-pack%2Ftree%2Fmain%2Fagent_starter_pack%2Fresources%2Fidx">
-  <picture>
-    <source
-      media="(prefers-color-scheme: dark)"
-      srcset="https://cdn.firebasestudio.dev/btn/try_light_20.svg">
-    <source
-      media="(prefers-color-scheme: light)"
-      srcset="https://cdn.firebasestudio.dev/btn/try_dark_20.svg">
-    <img
-      height="20"
-      alt="Try in Firebase Studio"
-      src="https://cdn.firebasestudio.dev/btn/try_blue_20.svg">
-  </picture>
-</a> [![Launch in Cloud Shell](https://img.shields.io/badge/Launch-in_Cloud_Shell-white)](https://shell.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Feliasecchig%2Fasp-open-in-cloud-shell&cloudshell_print=open-in-cs) ![Stars](https://img.shields.io/github/stars/GoogleCloudPlatform/agent-starter-pack?color=yellow)
+A comprehensive full-stack application for Agile development methodology with advanced reporting features, team management, and complete project health tracking. Built with Spring Boot and React.
 
-A Python package that provides **production-ready templates** for GenAI agents on Google Cloud.
+## 🎯 Overview
 
-Focus on your agent logic—the starter pack provides everything else: infrastructure, CI/CD, observability, and security.
+This system provides a complete Agile project management solution with:
+- **Comprehensive Project Health Tracking** - All standard Agile metrics
+- **Team Velocity Monitoring** - Track and forecast team performance
+- **Defect & Quality Management** - Complete defect lifecycle tracking
+- **Sprint Goal Achievement** - Track sprint success rates
+- **Customizable Reporting** - Flexible report generation and export
 
-| ⚡️ Launch | 🧪 Experiment  | ✅ Deploy | 🛠️ Customize |
-|---|---|---|---|
-| [Pre-built agent templates](./agent_starter_pack/agents/) (ReAct, RAG, multi-agent, Live API). | [Vertex AI evaluation](https://cloud.google.com/vertex-ai/generative-ai/docs/models/evaluation-overview) and an interactive playground. | Production-ready infra with [monitoring, observability](https://googlecloudplatform.github.io/agent-starter-pack/guide/observability), and [CI/CD](https://googlecloudplatform.github.io/agent-starter-pack/guide/deployment) on [Cloud Run](https://cloud.google.com/run) or [Agent Engine](https://cloud.google.com/vertex-ai/generative-ai/docs/agent-engine/overview). | Extend and customize templates according to your needs. 🆕 Now integrating with [Gemini CLI](https://github.com/google-gemini/gemini-cli) |
+## ✨ Key Features
 
----
+### Project Management
+- Create and manage multiple Agile projects
+- Track project status (Planning, Active, On Hold, Completed, Cancelled)
+- Monitor health status (Healthy, At Risk, Critical)
+- Document risk indicators
+- Team size tracking
 
-## ⚡ Get Started in 1 Minute
+### Team Management
+- Add team members with Agile roles (Product Owner, Scrum Master, Developer, Tester, Stakeholder)
+- Assign members to specific projects
+- Track active/inactive status
+- Role-based team statistics
 
-**From zero to production-ready agent in 60 seconds using [`uv`](https://docs.astral.sh/uv/getting-started/installation/):**
+### Sprint Management
+- Create and manage sprints with dates and story points
+- Set sprint goals and track achievement
+- Record stakeholder feedback from Sprint Reviews
+- Track sprint status (Planned, Active, Completed, Cancelled)
+- Calculate velocity automatically
 
-```bash
-uvx agent-starter-pack create
+### Task Management
+- Create tasks with multiple types:
+  - **Story** - User stories
+  - **Bug** - Software bugs
+  - **Defect** - Quality issues
+  - **Task** - General work items
+  - **Technical Debt** - Code quality improvements
+  - **Spike** - Research/investigation
+- Track status (To Do, In Progress, In Review, Done, Blocked)
+- Set priority (Low, Medium, High, Critical)
+- Assign story points
+- Assign to team members
+
+### Defect Tracking System
+- Complete defect lifecycle management
+- Track severity (Trivial, Minor, Major, Critical, Blocker)
+- Monitor status (New, Open, In Progress, Resolved, Closed, Reopened)
+- Set priority (Low, Medium, High, Urgent)
+- Mark escaped defects (production bugs)
+- Record root cause analysis
+- Assign to team members
+- Track found date and resolved date
+
+### Comprehensive Health Reports Dashboard
+
+The Enhanced Health Reports page provides ALL standard Agile metrics in one place:
+
+#### 1. **Burndown Chart** 📉
+- Tracks remaining work vs. time for sprints
+- Shows planned vs completed vs remaining story points
+- Visual bar chart representation
+
+#### 2. **Burn-up Chart** 📈
+- Tracks completed work vs. total scope
+- Useful when scope changes during project
+- Line chart showing cumulative progress
+
+#### 3. **Cumulative Flow Diagram (CFD)** 🌊
+- Shows flow of work through Kanban states
+- Visualizes To Do → In Progress → Done
+- Stacked area chart for work distribution
+
+#### 4. **Definition of Done (DoD) Adherence** ✅
+- Percentage showing quality and completeness
+- Ensures work meets acceptance criteria
+- Calculated from completed vs planned story points
+
+#### 5. **Sprint Goal Achievement** 🎯
+- Tracks whether sprint goals were met
+- Success rate across completed sprints
+- Percentage metric display
+
+#### 6. **Defect Trends / Quality Metrics** 🐛
+- Tracks open defects, resolved defects, escaped defects
+- Shows defect density over time
+- Bar chart visualization
+
+#### 7. **Stakeholder Feedback** 💬
+- Qualitative measure from Sprint Reviews
+- Captures perceived project progress
+- Text feedback display
+
+#### 8. **Risk Indicators** ⚠️
+- Project-specific risks and concerns
+- Highlighted warning section
+- Proactive risk management
+
+### Velocity Reports
+- Track story points completed per sprint
+- Calculate average velocity (3-5 sprint rolling average)
+- Compare planned vs actual velocity
+- Visualize velocity trends with charts
+- Forecast future capacity
+
+### Custom Report Builder
+- **Flexible Metrics Selection**: Choose which metrics to include
+- **Multiple Chart Types**: Bar charts, line charts, pie charts
+- **Data Grouping Options**: Group by sprint or task status
+- **Date Range Filtering**: All-time, last 3/6 sprints, current sprint
+- **Report Types**: Summary, detailed, or trend analysis
+- **Export Functionality**: Export as JSON or Text format
+- **PDF Generation**: Generate PDF reports
+
+## 🛠 Technology Stack
+
+### Backend
+- **Spring Boot 3.2.0** - Java-based backend framework
+- **Spring Data JPA** - Database access and ORM
+- **H2 Database** - In-memory database (auto-schema generation)
+- **Maven** - Build and dependency management
+- **Lombok** - Reduce boilerplate code
+- **iText PDF** - PDF report generation
+
+### Frontend
+- **React 18** - Modern UI library
+- **React Router** - Client-side routing
+- **Axios** - HTTP client for API calls
+- **Recharts** - Data visualization and charts
+- **CSS3** - Responsive styling
+
+## 📁 Project Structure
+
+```
+Agile/
+├── backend/                          # Spring Boot Backend
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/com/agile/
+│   │   │   │   ├── model/           # Entity classes
+│   │   │   │   │   ├── Project.java
+│   │   │   │   │   ├── Sprint.java (enhanced)
+│   │   │   │   │   ├── Task.java (enhanced)
+│   │   │   │   │   ├── Defect.java (new)
+│   │   │   │   │   ├── ProjectMember.java
+│   │   │   │   │   └── ...
+│   │   │   │   ├── repository/      # JPA repositories
+│   │   │   │   ├── service/         # Business logic
+│   │   │   │   ├── controller/      # REST controllers
+│   │   │   │   ├── dto/             # Data transfer objects
+│   │   │   │   └── config/          # Configuration
+│   │   │   └── resources/
+│   │   │       └── application.properties
+│   │   └── pom.xml
+│   └──
+├── frontend/                         # React Frontend
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Dashboard.js
+│   │   │   ├── ProjectList.js
+│   │   │   ├── TeamManagement.js
+│   │   │   ├── SprintManagement.js
+│   │   │   ├── EnhancedHealthReport.js
+│   │   │   ├── VelocityReport.js
+│   │   │   └── CustomReportBuilder.js
+│   │   ├── services/
+│   │   │   └── api.js
+│   │   ├── App.js
+│   │   └── index.js
+│   └── package.json
+├── README.md
+├── ENHANCED_FEATURES.md             # Detailed feature documentation
+├── RUN_INSTRUCTIONS.md              # How to run the application
+├── AGILE_FEATURES.md                # Agile methodology features
+└── TROUBLESHOOTING.md               # Common issues and solutions
 ```
 
-<details>
-<summary> ✨ Alternative: Using pip</summary>
+## 🚀 Getting Started
 
-If you don't have [`uv`](https://github.com/astral-sh/uv) installed, you can use pip:
-```bash
-# Create and activate a Python virtual environment
-python -m venv .venv && source .venv/bin/activate
+### Prerequisites
 
-# Install the agent starter pack
-pip install --upgrade agent-starter-pack
+- **Java 17** or higher
+- **Node.js 16** or higher
+- **Maven 3.6** or higher
+- **npm** or yarn
 
-# Create a new agent project
-agent-starter-pack create
-```
-</details>
+### Quick Start
 
-**That's it!** You now have a fully functional agent project—complete with backend, frontend, and deployment infrastructure—ready for you to explore and customize.
-
-### 🔧 Enhance Existing Agents
-
-Already have an agent? Add production-ready deployment and infrastructure by running this command in your project's root folder:
+#### 1. Backend Setup
 
 ```bash
-uvx agent-starter-pack enhance
+cd Agile/backend
+mvn clean install
+mvn spring-boot:run
 ```
 
-See [Installation Guide](https://googlecloudplatform.github.io/agent-starter-pack/guide/installation) for more options, or try with zero setup in [Firebase Studio](https://studio.firebase.google.com/new?template=https%3A%2F%2Fgithub.com%2FGoogleCloudPlatform%2Fagent-starter-pack%2Ftree%2Fmain%2Fsrc%2Fresources%2Fidx) or [Cloud Shell](https://shell.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Feliasecchig%2Fasp-open-in-cloud-shell&cloudshell_print=open-in-cs).
+Backend runs on: `http://localhost:8080`
 
----
+#### 2. Frontend Setup
 
-## 🤖 Agents
+```bash
+cd Agile/frontend
+npm install
+npm start
+```
 
-| Agent Name                  | Description                                                                                                                       |
-|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
-| `adk`      | A base ReAct agent implemented using Google's [Agent Development Kit](https://github.com/google/adk-python) |
-| `adk_a2a`  | An ADK agent with [Agent2Agent (A2A) Protocol](https://a2a-protocol.org/) support for distributed agent communication and interoperability |
-| `agentic_rag` | A RAG agent for document retrieval and Q&A. Supporting [Vertex AI Search](https://cloud.google.com/generative-ai-app-builder/docs/enterprise-search-introduction) and [Vector Search](https://cloud.google.com/vertex-ai/docs/vector-search/overview).       |
-| `langgraph`      | A base ReAct agent implemented using LangChain's [LangGraph](https://github.com/langchain-ai/langgraph) |
-| `adk_live`       | A real-time multimodal RAG agent powered by Gemini, supporting audio/video/text chat     |
+Frontend runs on: `http://localhost:3005`
 
-**More agents are on the way!** We are continuously expanding our [agent library](https://googlecloudplatform.github.io/agent-starter-pack/agents/overview). Have a specific agent type in mind? [Raise an issue as a feature request!](https://github.com/GoogleCloudPlatform/agent-starter-pack/issues/new?labels=enhancement)
+### Access the Application
 
-**🔍 ADK Samples**
+Open your browser and navigate to: **http://localhost:3005**
 
-Looking to explore more ADK examples? Check out the [ADK Samples Repository](https://github.com/google/adk-samples) for additional examples and use cases demonstrating ADK's capabilities.
+## 📊 Navigation Structure
 
----
+- **Dashboard** - Overview of all projects and key metrics
+- **Projects** - Create and manage projects, view team members
+- **Team Management** - Add team members and assign to projects
+- **Sprints & Tasks** - Create sprints, add tasks, assign work
+- **Velocity Reports** - Track team velocity and trends
+- **Health Reports** - Comprehensive project health dashboard (ALL metrics)
+- **Custom Reports** - Build custom reports and export data
 
-## 🌟 Community Showcase
+## 🔌 API Endpoints
 
-Explore amazing projects built with the Agent Starter Pack! 
+### Projects
+```
+GET    /api/projects              - Get all projects
+GET    /api/projects/{id}         - Get project by ID
+POST   /api/projects              - Create new project
+PUT    /api/projects/{id}         - Update project
+DELETE /api/projects/{id}         - Delete project
+```
 
-**[View Community Showcase →](https://googlecloudplatform.github.io/agent-starter-pack/guide/community-showcase)**
+### Project Members
+```
+GET    /api/projects/{projectId}/members           - Get project members
+POST   /api/projects/{projectId}/members           - Add member to project
+PUT    /api/projects/{projectId}/members/{id}      - Update member
+DELETE /api/projects/{projectId}/members/{id}      - Remove member
+POST   /api/projects/{projectId}/members/{id}/deactivate - Deactivate member
+```
 
-## Key Features
+### Sprints
+```
+GET    /api/sprints                        - Get all sprints
+GET    /api/sprints/{id}                   - Get sprint by ID
+GET    /api/sprints/project/{projectId}    - Get sprints by project
+POST   /api/sprints/project/{projectId}    - Create sprint
+PUT    /api/sprints/{id}                   - Update sprint
+DELETE /api/sprints/{id}                   - Delete sprint
+```
 
-The `agent-starter-pack` offers key features to accelerate and simplify the development of your agent:
-- **🔄 [CI/CD Automation](https://googlecloudplatform.github.io/agent-starter-pack/cli/setup_cicd)** - A single command to set up a complete CI/CD pipeline for all environments, supporting both **Google Cloud Build** and **GitHub Actions**.
-- **📥 [Data Pipeline for RAG with Terraform/CI-CD](https://googlecloudplatform.github.io/agent-starter-pack/guide/data-ingestion)** - Seamlessly integrate a data pipeline to process embeddings for RAG into your agent system. Supporting [Vertex AI Search](https://cloud.google.com/generative-ai-app-builder/docs/enterprise-search-introduction) and [Vector Search](https://cloud.google.com/vertex-ai/docs/vector-search/overview).
-- **[Remote Templates](https://googlecloudplatform.github.io/agent-starter-pack/remote-templates/)**: Create and share your own agent starter packs templates from any Git repository.
-- **🤖 Gemini CLI Integration** - Use the [Gemini CLI](https://github.com/google-gemini/gemini-cli) and the included `GEMINI.md` context file to ask questions about your template, agent architecture, and the path to production. Get instant guidance and code examples directly in your terminal.
+### Tasks
+```
+GET    /api/tasks                    - Get all tasks
+GET    /api/tasks/{id}               - Get task by ID
+GET    /api/tasks/sprint/{sprintId}  - Get tasks by sprint
+POST   /api/tasks/sprint/{sprintId}  - Create task
+PUT    /api/tasks/{id}               - Update task
+DELETE /api/tasks/{id}               - Delete task
+```
 
-## High-Level Architecture
+### Defects
+```
+GET    /api/defects                  - Get all defects
+GET    /api/defects/{id}             - Get defect by ID
+GET    /api/defects/project/{id}     - Get defects by project
+GET    /api/defects/sprint/{id}      - Get defects by sprint
+GET    /api/defects/escaped          - Get escaped defects
+POST   /api/defects                  - Create new defect
+PUT    /api/defects/{id}             - Update defect
+DELETE /api/defects/{id}             - Delete defect
+```
 
-This starter pack covers all aspects of Agent development, from prototyping and evaluation to deployment and monitoring.
+### Reports
+```
+GET    /api/reports/velocity/{projectId}  - Get velocity report
+GET    /api/reports/health/{projectId}    - Get health report
+POST   /api/reports/pdf                   - Generate PDF report
+```
 
-![High Level Architecture](docs/images/asp_high_level_architecture.png "Architecture")
+## 📈 Enhanced Data Models
 
----
+### Sprint (Enhanced)
+```java
+- sprintGoal (String)           // Sprint objective
+- stakeholderFeedback (String)  // Sprint Review feedback
+- goalAchieved (Boolean)        // Sprint success tracking
+```
 
-## 🔧 Requirements
+### Task (Enhanced)
+```java
+- type (TaskType enum)          // STORY, BUG, DEFECT, TASK, TECHNICAL_DEBT, SPIKE
+```
 
-- Python 3.10+
-- [Google Cloud SDK](https://cloud.google.com/sdk/docs/install)
-- [Terraform](https://developer.hashicorp.com/terraform/downloads) (for deployment)
-- [Make](https://www.gnu.org/software/make/) (for development tasks)
+### Defect (New Model)
+```java
+- severity (DefectSeverity)     // TRIVIAL, MINOR, MAJOR, CRITICAL, BLOCKER
+- status (DefectStatus)         // NEW, OPEN, IN_PROGRESS, RESOLVED, CLOSED, REOPENED
+- priority (DefectPriority)     // LOW, MEDIUM, HIGH, URGENT
+- escaped (Boolean)             // Production bug flag
+- rootCause (String)            // Root cause analysis
+- foundBy, assignedTo           // Team member references
+```
 
+## 🎯 Supported Agile Metrics
 
-## 📚 Documentation
+### Project Health Tracking (10/10) ✅
+1. ✅ Burndown Chart
+2. ✅ Burn-up Chart
+3. ✅ Cumulative Flow Diagram (CFD)
+4. ✅ Definition of Done Adherence
+5. ✅ Sprint Goal Achievement
+6. ✅ Defect Trends / Quality Metrics
+7. ✅ Stakeholder Feedback
+8. ✅ Risk Indicators
+9. ✅ Blocker Tracking
+10. ✅ Technical Debt Tracking
 
-Visit our [documentation site](https://googlecloudplatform.github.io/agent-starter-pack/) for comprehensive guides and references!
+### Team Velocity Tracking (3/3) ✅
+1. ✅ Story Point Velocity
+2. ✅ Average Velocity
+3. ✅ Planned vs Actual
 
-🔍 **New to the codebase?** Explore the [CodeWiki](https://codewiki.google/github.com/googlecloudplatform/agent-starter-pack) for AI-powered code understanding and navigation.
+## 📖 Documentation
 
-- [Getting Started Guide](https://googlecloudplatform.github.io/agent-starter-pack/guide/getting-started) - First steps with agent-starter-pack
-- [Installation Guide](https://googlecloudplatform.github.io/agent-starter-pack/guide/installation) - Setting up your environment
-- [Deployment Guide](https://googlecloudplatform.github.io/agent-starter-pack/guide/deployment) - Taking your agent to production
-- [Agent Templates Overview](https://googlecloudplatform.github.io/agent-starter-pack/agents/overview) - Explore available agent patterns
-- [CLI Reference](https://googlecloudplatform.github.io/agent-starter-pack/cli/) - Command-line tool documentation
+- **README.md** (this file) - Overview and getting started
+- **ENHANCED_FEATURES.md** - Detailed feature documentation
+- **RUN_INSTRUCTIONS.md** - Step-by-step running instructions
+- **AGILE_FEATURES.md** - Agile methodology features
+- **TASK_ASSIGNMENT_GUIDE.md** - Task assignment workflow
+- **TROUBLESHOOTING.md** - Common issues and solutions
 
+## 🔧 Configuration
 
-### Video Walkthrough:
+### Backend Configuration
+Edit `backend/src/main/resources/application.properties`:
+```properties
+server.port=8080
+spring.h2.console.enabled=true
+spring.jpa.hibernate.ddl-auto=update
+```
 
-- **[From Demo to Production with Agent Starter Pack](https://www.youtube.com/watch?v=mtJMYgJkTt8)**: Learn how the Agent Starter Pack acts as an Automated Architect, building the professional infrastructure for your AI project in seconds. Covers why most AI projects fail at deployment and how ASP automates Terraform, CI/CD, and observability.
+### Frontend Configuration
+Edit `frontend/src/services/api.js` to change API base URL:
+```javascript
+const API_BASE_URL = 'http://localhost:8080/api';
+```
 
-- **[6-minute introduction](https://www.youtube.com/live/eZ-8UQ_t4YM?feature=shared&t=2791)** (April 2024): Explaining the Agent Starter Pack and demonstrating its key features. Part of the Kaggle GenAI intensive course.
+## 🎨 Usage Guide
 
-Looking for more examples and resources for Generative AI on Google Cloud? Check out the [GoogleCloudPlatform/generative-ai](https://github.com/GoogleCloudPlatform/generative-ai) repository for notebooks, code samples, and more!
+### 1. Create a Project
+- Go to **Projects** page
+- Click "Create Project"
+- Fill in project details (name, dates, status, health status, risk indicators)
+- Submit
 
-## Contributing
+### 2. Add Team Members
+- Go to **Team Management** page
+- Click "Add Team Member"
+- Select project, enter member details, choose Agile role
+- Submit
 
-Contributions are welcome! See the [Contributing Guide](CONTRIBUTING.md).
+### 3. Create Sprints
+- Go to **Sprints & Tasks** page
+- Select project
+- Click "Create Sprint"
+- Set sprint goal, dates, and planned story points
+- Submit
 
-## Feedback
+### 4. Add Tasks
+- In Sprint Management, select a sprint
+- Click "Create Task"
+- Choose task type, set priority, story points
+- Assign to team member
+- Submit
 
-We value your input! Your feedback helps us improve this starter pack and make it more useful for the community.
+### 5. Track Progress
+- Go to **Health Reports** to see all metrics
+- View burndown, burn-up, CFD, defects, etc.
+- Monitor sprint goal achievement
+- Review stakeholder feedback
 
-### Getting Help
+### 6. Generate Reports
+- Go to **Custom Reports**
+- Select project and configure report settings
+- Generate visualization
+- Export as JSON or Text
 
-If you encounter any issues or have specific suggestions, please first consider [raising an issue](https://github.com/GoogleCloudPlatform/generative-ai/issues) on our GitHub repository.
+## 🧪 Testing
 
-### Share Your Experience
+### Backend Tests
+```bash
+cd Agile/backend
+mvn test
+```
 
-For other types of feedback, or if you'd like to share a positive experience or success story using this starter pack, we'd love to hear from you! You can reach out to us at <a href="mailto:agent-starter-pack@google.com">agent-starter-pack@google.com</a>.
+### Frontend Tests
+```bash
+cd Agile/frontend
+npm test
+```
 
-Thank you for your contributions!
+## 🤝 Contributing
 
-## Disclaimer
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-This repository is for demonstrative purposes only and is not an officially supported Google product.
+## 📝 License
 
-## Terms of Service
+This project is open source and available under the MIT License.
 
-The agent-starter-pack templating CLI and the templates in this starter pack leverage Google Cloud APIs. When you use this starter pack, you'll be deploying resources in your own Google Cloud project and will be responsible for those resources. Please review the [Google Cloud Service Terms](https://cloud.google.com/terms/service-terms) for details on the terms of service associated with these APIs.
+## 💡 Best Practices
+
+### Sprint Management
+- Always set clear, measurable sprint goals
+- Record stakeholder feedback after every Sprint Review
+- Mark goal achievement honestly for accurate metrics
+
+### Task Classification
+- Use **STORY** for user-facing features
+- Use **BUG** for software defects found in testing
+- Use **DEFECT** for production issues
+- Use **TECHNICAL_DEBT** for code quality improvements
+- Use **SPIKE** for research/investigation work
+
+### Defect Management
+- Log defects as soon as they're found
+- Mark escaped defects to track quality
+- Always record root cause for learning
+- Update status regularly
+
+### Health Monitoring
+- Review health dashboard weekly
+- Track trends, not just current state
+- Address risks proactively
+- Use feedback for continuous improvement
+
+## 🆘 Support
+
+For detailed troubleshooting, see **TROUBLESHOOTING.md**
+
+For issues and questions, please create an issue in the repository.
+
+## 🎉 Features Summary
+
+This is a **production-ready** Agile project management system with:
+- ✅ Complete project, sprint, and task management
+- ✅ Team management with Agile roles
+- ✅ All 10 standard Agile health metrics
+- ✅ Comprehensive defect tracking
+- ✅ Velocity tracking and forecasting
+- ✅ Customizable reporting with export
+- ✅ Real-time dashboards and visualizations
+- ✅ Sprint goal and stakeholder feedback tracking
+- ✅ Technical debt and blocker monitoring
+
+**Ready to use for professional Agile project management!** 🚀
