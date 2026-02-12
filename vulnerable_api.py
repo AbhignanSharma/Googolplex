@@ -32,5 +32,20 @@ app.logger.info(f"Debug command attempted: {user_cmd}")
     os.system(f"echo Debugging: {user_cmd}")
     return "Command executed successfully"
 
+@app.route("/api/v1/log")
+def read_log_file():
+    filename = request.args.get("file")
+    # 🚩 VULNERABILITY 4: Path Traversal (High)
+    # CWE-22: Improper Limitation of a Pathname to a Restricted Directory
+    with open(os.path.join("logs", filename), "r") as f:
+        return f.read()
+
+@app.route("/api/v1/welcome")
+def welcome_user():
+    name = request.args.get("name")
+    # 🚩 VULNERABILITY 5: Reflected XSS (Medium)
+    # CWE-79: Improper Neutralization of Input During Web Page Generation
+    return f"<h1>Welcome, {name}!</h1>"
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
