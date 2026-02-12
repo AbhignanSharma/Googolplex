@@ -1,12 +1,13 @@
-import os
-import sqlite3
 from flask import Flask, request
+import sqlite3
+import os
 
 app = Flask(__name__)
 
 # 🚩 VULNERABILITY 1: Hardcoded Secret (Medium)
 # Secrets should be in environment variables, not in code.
-ADMIN_API_KEY = "sg-demo-key-998877665544"
+ADMIN_API_KEY = os.environ.get("ADMIN_API_KEY") # Load from environment variable
+# Production deployments should ensure ADMIN_API_KEY is set and handle its absence
 
 @app.route("/api/v1/user")
 def get_user_data():
@@ -16,8 +17,9 @@ def get_user_data():
     # CWE-89: Improper Neutralization of Special Elements used in an SQL Command
     conn = sqlite3.connect("users.db")
     cursor = conn.cursor()
-    query = f"SELECT * FROM users WHERE id = '{user_id}'"
-    cursor.execute(query)
+    # Use parameterized queries to prevent SQL injection
+    query = "SELECT * FROM users WHERE id = ?"
+    cursor.execute(query, (user_id,))
     return str(cursor.fetchone())
 
 @app.route("/api/v1/debug")
@@ -27,7 +29,9 @@ def debug_command():
     # 🚩 VULNERABILITY 3: OS Command Injection (Critical)
     # CWE-78: Improper Neutralization of Special Elements used in an OS Command
     # This allows Remote Code Execution (RCE) on the server.
-    os.system(f"echo Debugging: {user_cmd}")
+    # Log the command instead of executing it to prevent OS Command Injection
+    # If actual OS command execution is needed, use subprocess.run with a strict whitelist and shell=False
+    app.logger.info(f"Debug command attempted: {user_cmd}")
     return "Command executed successfully"
 
 if __name__ == "__main__":
