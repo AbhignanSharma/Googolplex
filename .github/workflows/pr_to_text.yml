@@ -1,0 +1,41 @@
+name: PR to Text File
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  print-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract PR Details
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          echo "Extracting details for PR #$PR_NUMBER..."
+          gh pr view $PR_NUMBER --json title,body,author,createdAt,url --template \
+          "Title: {{.title}}
+          Author: {{.author.login}}
+          Created At: {{.createdAt}}
+          URL: {{.url}}
+          
+          Description:
+          {{.body}}" > pr_details.txt
+          
+          echo "PR details saved to pr_details.txt"
+          cat pr_details.txt
+
+      - name: Upload PR Draft Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-details-text
+          path: pr_details.txt
+          retention-days: 5
