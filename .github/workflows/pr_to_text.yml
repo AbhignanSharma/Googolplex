@@ -17,7 +17,7 @@ jobs:
 
       - name: Extract PR Details
         env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
+          GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           echo "Extracting details for PR #$PR_NUMBER..."
@@ -55,6 +55,6 @@ jobs:
 
       - name: Post Comment
         env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
+          GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: gh pr comment $PR_NUMBER --body-file ai_response.txt
