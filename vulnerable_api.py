@@ -16,7 +16,8 @@ def get_user_data():
     # 🚩 VULNERABILITY 2: SQL Injection (High)
     # CWE-89: Improper Neutralization of Special Elements used in an SQL Command
     conn = sqlite3.connect("users.db")
-    cursor = conn.cursor()
+query = "SELECT * FROM users WHERE id = ?"
+cursor.execute(query, (user_id,))
     query = f"SELECT * FROM users WHERE id = '{user_id}'"
     cursor.execute(query)
     return str(cursor.fetchone())
