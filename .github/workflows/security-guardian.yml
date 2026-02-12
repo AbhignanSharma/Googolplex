@@ -27,44 +27,6 @@ name: 🛡️ Security Guardian Review
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-    # Review all file types — the LLM handles any language
-    paths:
-      - '**/*.py'
-      - '**/*.js'
-      - '**/*.ts'
-      - '**/*.jsx'
-      - '**/*.tsx'
-      - '**/*.java'
-      - '**/*.go'
-      - '**/*.rs'
-      - '**/*.rb'
-      - '**/*.php'
-      - '**/*.cs'
-      - '**/*.cpp'
-      - '**/*.c'
-      - '**/*.swift'
-      - '**/*.kt'
-      - '**/*.scala'
-      - '**/*.vue'
-      - '**/*.sql'
-      - '**/*.yml'
-      - '**/*.yaml'
-      - '**/*.json'
-      - '**/*.xml'
-      - '**/*.tf'
-      - '**/*.hcl'
-      - '**/*.sh'
-      - '**/*.bash'
-      - '**/Dockerfile'
-      - '**/docker-compose*'
-      - '**/.env*'
-      - '**/requirements*.txt'
-      - '**/package*.json'
-      - '**/pom.xml'
-      - '**/build.gradle*'
-      - '**/go.mod'
-      - '**/Cargo.toml'
-      - '**/Gemfile*'
 
 # Cancel previous runs for the same PR
 concurrency:
