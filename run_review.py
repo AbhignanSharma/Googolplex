@@ -35,6 +35,7 @@ logger = logging.getLogger("SecurityGuardianRunner")
 async def run_review(pr_number: int):
     """Run the security review for a specific PR."""
     logger.info(f"🚀 Starting Security Guardian Review for PR #{pr_number}")
+    logger.info("🤖 Initializing autonomous agents...")
 
     # Construct the user request for Mode 3
     user_prompt = (
