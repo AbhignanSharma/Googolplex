@@ -1,2 +1,6 @@
 PyGithub==2.1.1
 pytest==7.4.4
+google-adk
+requests
+bcrypt
+python-dotenv
