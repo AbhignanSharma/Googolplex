@@ -57,7 +57,8 @@ async def run_review(pr_number: int):
         app_name="security_guardian",
         artifact_service=InMemoryArtifactService(),
         session_service=InMemorySessionService(),
-        credential_service=InMemoryCredentialService()
+        credential_service=InMemoryCredentialService(),
+        auto_create_session=True
     )
 
     # Prepare the message content
