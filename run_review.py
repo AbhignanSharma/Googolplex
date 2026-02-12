@@ -24,8 +24,8 @@ from google.adk.agents import Agent
 # Import our configured root agent
 # Note: In a real package structure, this might be 'from my_agent.agent import root_agent'
 # Adjusting path to ensure local import works
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from agent import root_agent
+from security_guardian.agent import root_agent
+from google.adk.auth.credential_service.in_memory_credential_service import InMemoryCredentialService
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
