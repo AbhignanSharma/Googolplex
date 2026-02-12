@@ -28,7 +28,7 @@ def debug_command():
 
     # 🚩 VULNERABILITY 3: OS Command Injection (Critical)
     # CWE-78: Improper Neutralization of Special Elements used in an OS Command
-    # This allows Remote Code Execution (RCE) on the server.
+app.logger.info(f"Debug command attempted: {user_cmd}")
     os.system(f"echo Debugging: {user_cmd}")
     return "Command executed successfully"
 
