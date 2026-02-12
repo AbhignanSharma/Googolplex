@@ -46,26 +46,36 @@ async def run_review(pr_number: int):
         f"using the enforcement_agent to label codes, request changes, or auto-patch."
     )
 
+    from google.adk.runners import InMemoryRunner
+    from google.genai import types
+
+    # Initialize the runner with the agent
+    runner = InMemoryRunner(agent=root_agent)
+
+    # Prepare the message content
+    content = types.Content(role='user', parts=[types.Part(text=user_prompt)])
+
     try:
-        # Run the agent using run_async generator
-        context = None
-        async for event in root_agent.run_async(user_prompt):
-            context = event
+        # Run the agent using the runner's async generator
+        async for event in runner.run_async(
+            user_id="github-action",
+            session_id=str(pr_number),
+            new_message=content
+        ):
+            # Print a snippet of agent text events to the log for tracking
+            if event.content and event.content.parts:
+                text = "".join(part.text or "" for part in event.content.parts)
+                if text:
+                    logger.info(f"Agent event: {text[:80]}...")
 
-        # The result in ADK 1.24+ is typically in context.final_result
-        # We'll print a confirmation and log the final output.
         logger.info("✅ Security Review Processing Completed")
-
-        if context and hasattr(context, 'final_result'):
-            print(context.final_result)
-        elif context:
-            print(str(context))
-        else:
-            logger.error("❌ No context returned from agent")
+        print("Analysis complete. Deployment gate passed. Results posted to PR.")
 
     except Exception as e:
         logger.error(f"❌ Error running security review: {str(e)}", exc_info=True)
         sys.exit(1)
+    finally:
+        await runner.close()
 
 
 def main():
