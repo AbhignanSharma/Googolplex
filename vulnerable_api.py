@@ -75,5 +75,13 @@ def get_config(user_id):
     # No authentication or authorization check. Anyone can access any user's config by ID.
     return {"status": "success", "config": {"user": user_id, "role": "admin", "debug": True}}
 
+@app.route("/redirect")
+def open_redirect():
+    # 🚩 VULNERABILITY 9: Open Redirect
+    # Unvalidated user-supplied input in redirect target
+    target = request.args.get("url")
+    from flask import redirect
+    return redirect(target)
+
 if __name__ == "__main__":
     app.run(debug=True)
