@@ -46,11 +46,19 @@ async def run_review(pr_number: int):
         f"using the enforcement_agent to label codes, request changes, or auto-patch."
     )
 
-    from google.adk.runners import InMemoryRunner
+    from google.adk.runners import Runner
+    from google.adk.artifacts.in_memory_artifact_service import InMemoryArtifactService
+    from google.adk.sessions.in_memory_session_service import InMemorySessionService
     from google.genai import types
 
-    # Initialize the runner with the agent
-    runner = InMemoryRunner(agent=root_agent)
+    # Initialize the runner with explicit in-memory services to ensure credentials work
+    runner = Runner(
+        agent=root_agent,
+        app_name="security_guardian",
+        artifact_service=InMemoryArtifactService(),
+        session_service=InMemorySessionService(),
+        credential_service=InMemoryCredentialService()
+    )
 
     # Prepare the message content
     content = types.Content(role='user', parts=[types.Part(text=user_prompt)])
@@ -66,7 +74,7 @@ async def run_review(pr_number: int):
             if event.content and event.content.parts:
                 text = "".join(part.text or "" for part in event.content.parts)
                 if text:
-                    logger.info(f"Agent event: {text[:80]}...")
+                    logger.info(f"Agent event: {text}...")
 
         logger.info("✅ Security Review Processing Completed")
         print("Analysis complete. Deployment gate passed. Results posted to PR.")
