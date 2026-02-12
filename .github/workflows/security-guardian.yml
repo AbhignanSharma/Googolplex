@@ -1,0 +1,134 @@
+# ═══════════════════════════════════════════════════════════════════
+# 🛡️ SECURITY GUARDIAN — GitHub Actions Workflow
+# ═══════════════════════════════════════════════════════════════════
+#
+# Triggers automatically when a PR is created or updated.
+# Runs the multi-agent security analysis pipeline and:
+#   - Posts review comments on the PR
+#   - Adds severity labels (security-critical, security-high, etc.)
+#   - Requests changes if critical/high issues found
+#   - Creates a patch PR with surgical fixes
+#   - Tracks risk score history
+#
+# Required secrets:
+#   - GITHUB_TOKEN (auto-provided by Actions)
+#   - GOOGLE_CLOUD_PROJECT: Your GCP project ID
+#   - GOOGLE_CLOUD_LOCATION: Vertex AI region (e.g., us-central1)
+#
+# Optional secrets:
+#   - SECURITY_GUARDIAN_PAT: Personal access token with repo write
+#     permissions (needed for creating patch PRs and adding labels).
+#     If not set, uses the auto-provided GITHUB_TOKEN which may have
+#     limited permissions.
+# ═══════════════════════════════════════════════════════════════════
+
+name: 🛡️ Security Guardian Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    # Review all file types — the LLM handles any language
+    paths:
+      - '**/*.py'
+      - '**/*.js'
+      - '**/*.ts'
+      - '**/*.jsx'
+      - '**/*.tsx'
+      - '**/*.java'
+      - '**/*.go'
+      - '**/*.rs'
+      - '**/*.rb'
+      - '**/*.php'
+      - '**/*.cs'
+      - '**/*.cpp'
+      - '**/*.c'
+      - '**/*.swift'
+      - '**/*.kt'
+      - '**/*.scala'
+      - '**/*.vue'
+      - '**/*.sql'
+      - '**/*.yml'
+      - '**/*.yaml'
+      - '**/*.json'
+      - '**/*.xml'
+      - '**/*.tf'
+      - '**/*.hcl'
+      - '**/*.sh'
+      - '**/*.bash'
+      - '**/Dockerfile'
+      - '**/docker-compose*'
+      - '**/.env*'
+      - '**/requirements*.txt'
+      - '**/package*.json'
+      - '**/pom.xml'
+      - '**/build.gradle*'
+      - '**/go.mod'
+      - '**/Cargo.toml'
+      - '**/Gemfile*'
+
+# Cancel previous runs for the same PR
+concurrency:
+  group: security-guardian-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write        # For creating patch branches and commits
+  pull-requests: write   # For posting reviews and creating patch PRs
+  issues: write          # For adding labels
+
+jobs:
+  security-review:
+    name: 🛡️ Security Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      # ─────────────────────────────────────────────────────────
+      # 1. Checkout the repository
+      # ─────────────────────────────────────────────────────────
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for diff comparison
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      # ─────────────────────────────────────────────────────────
+      # 2. Set up Python
+      # ─────────────────────────────────────────────────────────
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+
+      # ─────────────────────────────────────────────────────────
+      # 3. Install dependencies
+      # ─────────────────────────────────────────────────────────
+      - name: 📦 Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install google-adk requests bcrypt
+
+      # ─────────────────────────────────────────────────────────
+      # 4. Run Security Guardian
+      # ─────────────────────────────────────────────────────────
+      - name: 🛡️ Run Security Guardian Analysis
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GOOGLE_GENAI_USE_VERTEXAI: "False"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          python run_review.py --pr $PR_NUMBER
+
+      # ─────────────────────────────────────────────────────────
+      # 5. Upload analysis artifacts (optional)
+      # ─────────────────────────────────────────────────────────
+      - name: 📊 Upload Security Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-report-pr-${{ github.event.pull_request.number }}
+          path: security_report.md
+          retention-days: 30
