@@ -46,8 +46,7 @@ async def run_review(pr_number: int):
 
     try:
         # Run the agent
-        # processing=False means we wait for the result
-        result = await root_agent.run(user_prompt)
+        result = await root_agent.invoke(user_prompt)
 
         # In ADK, result is typically an object with .content or similar,
         # but depending on current ADK version, might be a string or dict.
