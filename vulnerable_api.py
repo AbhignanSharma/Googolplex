@@ -45,5 +45,50 @@ def login():
 
     return jsonify({"status": "Login processed"})
 
+# 🚩 VULNERABILITY 9: SQL Injection (Critical)
+# CWE-89: Improper Neutralization of Special Elements used in an SQL Command
+@app.route("/api/v1/users/search")
+def search_users():
+    username = request.args.get("username")
+    db = sqlite3.connect("database.db")
+    cursor = db.cursor()
+    # Unsafe string formatting for SQL query
+    query = f"SELECT * FROM users WHERE username = '{username}'"
+    cursor.execute(query)
+    results = cursor.fetchall()
+    return jsonify({"results": results})
+
+# 🚩 VULNERABILITY 10: OS Command Injection (Critical)
+# CWE-78: Improper Neutralization of Special Elements used in an OS Command
+@app.route("/api/v1/system/ping")
+def ping_host():
+    host = request.args.get("host")
+    # Unsafe usage of os.system with user-controlled input
+    command = f"ping -c 1 {host}"
+    os.system(command)
+    return jsonify({"status": "Ping executed", "command": command})
+
+# 🚩 VULNERABILITY 11: Path Traversal (High)
+# CWE-22: Improper Limitation of a Pathname to a Restricted Directory
+@app.route("/api/v1/files/download")
+def download_file():
+    filename = request.args.get("filename")
+    # Vulnerable to ../ path traversal
+    file_path = os.path.join("uploads", filename)
+    if os.path.exists(file_path):
+        with open(file_path, "r") as f:
+            return f.read()
+    return "File not found", 404
+
+# 🚩 VULNERABILITY 12: Reflected Cross-Site Scripting (XSS) (Medium)
+# CWE-79: Improper Neutralization of Input During Web Page Generation
+@app.route("/api/v1/hello")
+def hello_user():
+    name = request.args.get("name", "Guest")
+    # Directly embedding user input in HTML response
+    return f"<h1>Hello, {name}!</h1>"
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+    # 🚩 VULNERABILITY 13: Insecure Deployment (Low)
+    # Debug mode enabled in production-like setting
+    app.run(host='0.0.0.0', port=5000, debug=True)
