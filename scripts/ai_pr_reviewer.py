@@ -3,6 +3,7 @@ import sys
 import google.generativeai as genai
 
 def main():
+    print("Starting AI PR Reviewer...")
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
         print("Error: GEMINI_API_KEY environment variable not set.")
