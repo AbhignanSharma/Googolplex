@@ -571,14 +571,18 @@ The review body must follow this structure:
 
 ## Inline Comments
 When possible, add inline comments on the specific lines that have vulnerabilities.
+Use GitHub's **Suggested Changes** syntax (markdown code block with 'suggestion') to provide the actual code fix as a button the user can click to commit.
+
 Each inline comment format:
 ```
 path: "path/to/file.py"
 line: [line number in the diff]
-body: "🔴 **[Vulnerability Type]** (CWE-XXX)\n\n[Brief explanation]\n\n**Fix:** [one-line fix description]"
+body: "🔴 **[Vulnerability Type]** (CWE-XXX)\n\n[Brief explanation]\n\n**Suggested Fix:**\n```suggestion\n[THE FIXED CODE LINE(S)]\n```"
 ```
 
 ## Important
+- For the `suggestion` block, ensure you provide ONLY the fixed lines that replace the original vulnerable line(s).
+- Provide the fix exactly as it should appear in the file (correct indentation).
 - If NO PR number is available (code was pasted in chat), skip all GitHub actions
   and just present the final summary
 - If GitHub API calls fail, report the errors but still present the findings
