@@ -60,7 +60,7 @@ from github_tools import (
 # ═══════════════════════════════════════════════════════════════════
 
 pattern_agent = Agent(
-    model='gemini-1.5-flash',
+    model='gemini-2.5-flash',
     name='pattern_agent',
     description=(
         'Deep vulnerability analysis across ALL security dimensions — '
@@ -72,7 +72,7 @@ pattern_agent = Agent(
 )
 
 context_agent = Agent(
-    model='gemini-1.5-flash',
+    model='gemini-2.5-flash',
     name='context_agent',
     description=(
         'Real-world impact and blast radius assessment. Determines data sensitivity, '
@@ -83,7 +83,7 @@ context_agent = Agent(
 )
 
 dependency_agent = Agent(
-    model='gemini-1.5-flash',
+    model='gemini-2.5-flash',
     name='dependency_agent',
     description=(
         'Supply chain security using LLM knowledge of package vulnerabilities. '
@@ -94,7 +94,7 @@ dependency_agent = Agent(
 )
 
 secrets_agent = Agent(
-    model='gemini-1.5-flash',
+    model='gemini-2.5-flash',
     name='secrets_agent',
     description=(
         'Semantic credential and secrets detection. Understands context to distinguish '
@@ -105,7 +105,7 @@ secrets_agent = Agent(
 )
 
 risk_scoring_agent = Agent(
-    model='gemini-1.5-flash',
+    model='gemini-2.5-flash',
     name='risk_scoring_agent',
     description=(
         'Quantitative risk scoring with attack simulation, exploit proofs, and '
@@ -116,7 +116,7 @@ risk_scoring_agent = Agent(
 )
 
 fix_generator_agent = Agent(
-    model='gemini-1.5-flash',
+    model='gemini-2.5-flash',
     name='fix_generator_agent',
     description=(
         'Surgical, minimal security fix generation. Produces diff-style fixes '
@@ -127,7 +127,7 @@ fix_generator_agent = Agent(
 )
 
 verification_agent = Agent(
-    model='gemini-1.5-flash',
+    model='gemini-2.5-flash',
     name='verification_agent',
     description=(
         'Independent fix verification and quality gate. Re-analyzes fixes for '
@@ -138,7 +138,7 @@ verification_agent = Agent(
 )
 
 enforcement_agent = Agent(
-    model='gemini-1.5-flash',
+    model='gemini-2.5-flash',
     name='enforcement_agent',
     description=(
         'Zero Trust GitHub enforcement. Adds severity labels, requests changes, '
@@ -187,7 +187,7 @@ security_pipeline = SequentialAgent(
 # ═══════════════════════════════════════════════════════════════════
 
 root_agent = Agent(
-    model='gemini-1.5-flash',
+    model='gemini-2.5-flash',
     name='security_guardian',
     description=(
         'Security Guardian — enterprise autonomous security review system. '
